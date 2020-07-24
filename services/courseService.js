@@ -55,10 +55,15 @@ async function getCourseByCid(cid) {
     const result = await Course.findByPk(cid);
     return JSON.parse(JSON.stringify(result));
 }
+async function getAllCourse(){
+    const result = await Course.findAll();
+    return JSON.parse(JSON.stringify(result));
+}
 module.exports = {
     addCourse,
     updateCourse,
     deleteCourse,
     getCourseByTeacher,
-    getCourseByCid
+    getCourseByCid,
+    getAllCourse
 }

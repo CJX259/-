@@ -3,10 +3,12 @@ const {pathToRegexp} = require("path-to-regexp");
 const crypt = require("../utils/crypt");
 const needToApi = [
     {method : "POST", path :"/api/user/resetPwd"},
+    {method : "GET", path :"/api/user/loginByCookie"},
     {method : "POST", path : "/api/admin/addAdmin"},
     {method : "POST", path : "/api/admin/updateAdmin"},
     {method : "POST", path : "/api/teacher/updateTeacher"},
     {method : "POST", path : "/api/teacher/addTeacher"},
+    {method : "GET", path : "/api/teacher/getTeacherById"},
     {method : "GET", path : "/api/teacher/delTeacher"},
     {method : "GET", path : "/api/teacher/showCourse"},
     {method : "POST", path : "/api/std/addStd"},

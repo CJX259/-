@@ -4,7 +4,6 @@ const { getErr, asyncHandler } = require("../getSendResult");
 const Course = require('../../services/courseService');
 const mapSer = require("../../services/mapService");
 const stdSer = require("../../services/studentService");
-const e = require("express");
 // 管理员端与老师端  teacherId
 router.post("/addCourse", asyncHandler(async (req, res) => {
     if (req.job === "a") {
@@ -79,10 +78,6 @@ router.get("/delCourse", asyncHandler(async (req, res) => {
 
 //查看选课的学生，支持老师端与管理员  传入cid
 router.get("/showStudent", asyncHandler(async (req, res) => {
-    if (req.job !== 't' && req.job !== 'a') {
-        res.status(403).send(getErr("暂无权限", 403));
-        return null;
-    }
     const mapping = await mapSer.showStdByCid(req.query.cid);
     let result = [];
     for (let i = 0; i < mapping.rows.length; i++) {
@@ -93,12 +88,8 @@ router.get("/showStudent", asyncHandler(async (req, res) => {
     return result;
 }))
 
-// 踢出学生  管理员和老师端都可  传入cid和sid  匹配一次老师的id是否符合cid的tid
+// 踢出学生/自主退课  传入cid和sid  匹配一次老师的id是否符合cid的tid
 router.get("/outStudent", asyncHandler(async (req, res) => {
-    if (req.job !== 't' && req.job !== 'a') {
-        res.status(403).send(getErr("暂无权限", 403));
-        return null;
-    }
     if (req.job === "t") {
         let flag = false;
         const course = await Course.getCourseByCid(req.query.cid);
@@ -107,17 +98,28 @@ router.get("/outStudent", asyncHandler(async (req, res) => {
         }
         if (flag) {
             const result = await mapSer.deleteMap(req.query.sid, req.query.cid);
-            console.log("完成查询");
+            console.log("完成删除");
             return result;
         } else {
             res.status(403).send(getErr("暂无权限", 403));
             return null;
         }
     }
-    const result = await mapSer.deleteMap(req.query.sid, req.query.cid);
+    if (req.job === "a") {
+        const result = await mapSer.deleteMap(req.query.sid, req.query.cid);
+        console.log("完成删除");
+        return result;
+    }
+    if(req.job ==="s"){
+        const result = await mapSer.deleteMap(req.userId, req.query.cid);
+        console.log("完成删除");
+        return result;
+    }
+
+}))
+router.get("/getAllCourses", asyncHandler(async (req, res) => {
+    const result = await Course.getAllCourse();
     console.log("完成查询");
     return result;
 }))
-
-
 module.exports = router;

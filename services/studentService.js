@@ -3,7 +3,7 @@ const md5 = require("md5");
 const { Op } = require("sequelize");
 
 async function addStd(stdObj) {
-    if(typeof stdObj != "object"){
+    if (typeof stdObj != "object") {
         console.log("传入学生数据有误");
         return null;
     }
@@ -17,7 +17,7 @@ async function addStd(stdObj) {
     }
 }
 async function updateStd(id, stdObj) {
-    if(typeof stdObj != "object"){
+    if (typeof stdObj != "object") {
         console.log("传入学生数据有误");
         return null;
     }
@@ -50,25 +50,42 @@ async function deleteStd(id) {
 //学生端登录
 async function login(Nob, pwd) {
     pwd = md5(pwd);
-    const res = await Student.findOne({
-        where: {
-            [Op.and]: [
-                {Nob : Nob},
-                {password : pwd}
-            ]
-        },
-        attributes : ["id", "Nob", "name"]
-    });
-    return JSON.parse(JSON.stringify(res));
+    try {
+        const res = await Student.findOne({
+            where: {
+                [Op.and]: [
+                    { Nob: Nob },
+                    { password: pwd }
+                ]
+            },
+            attributes: ["id", "Nob", "name"]
+        });
+        return JSON.parse(JSON.stringify(res));
+    } catch (e) {
+        return JSON.parse(JSON.stringify(e));
+    }
+
 }
 async function getStdById(sid) {
     const res = await Student.findByPk(sid);
     return JSON.parse(JSON.stringify(res));
+}
+async function getDetailById(id) {
+    try {
+        const res = await Student.findByPk(id,
+            {
+                attributes: ["id", "Nob", "name"]
+            });
+        return JSON.parse(JSON.stringify(res));
+    } catch (err) {
+        return JSON.parse(JSON.stringify(err));
+    }
 }
 module.exports = {
     addStd,
     updateStd,
     deleteStd,
     login,
-    getStdById
+    getStdById,
+    getDetailById
 }

@@ -60,12 +60,12 @@ router.get("/showCourse", asyncHandler(async (req, res) => {
         res.status(403).send(getErr("暂无权限", 403));
         return null;
     }
-    if(req.job == "t"){
+    if (req.job == "t") {
         const result = await CourseSer.getCourseByTeacher(req.userId);
         return result;
     }
-    if(req.job == "a"){
-        if(!req.query.tid){
+    if (req.job == "a") {
+        if (!req.query.tid) {
             res.status(403).send(getErr("缺少参数", 403));
             return null;
         }
@@ -73,5 +73,12 @@ router.get("/showCourse", asyncHandler(async (req, res) => {
         return result;
     }
 }))
-
+router.get("/getTeacherById", asyncHandler(async (req, res) => {
+    if (!req.query.tid) {
+        res.status(403).send(getErr("缺少参数", 403));
+        return null;
+    }
+    const result = await teaSer.getDetailById(req.query.tid);
+    return result;
+}))
 module.exports = router;

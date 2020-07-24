@@ -4,7 +4,23 @@ const teaSer = require('../../services/teacherService');
 const express = require('express');
 const crypt = require('../../utils/crypt');
 const router = express.Router();
-const { asyncHandler, getResult } = require("../getSendResult");
+const { asyncHandler, getResult, getErr } = require("../getSendResult");
+//写一个通过cookie来返回用户信息的api
+router.get("/loginByCookie", asyncHandler(async (req, res) => {
+    let result = null;
+    if (req.job === "a") {
+        result = await adminSer.getDetailById(req.userId);
+        result.job = "admin";
+    } else if (req.job === "t") {
+        result = await teaSer.getDetailById(req.userId);
+        result.job = "teacher";
+    } else if (req.job === "s") {
+        result = await stdSer.getDetailById(req.userId);
+        result.job = "student";
+    }
+    return result;
+}))
+
 router.post("/login", asyncHandler(async (req, res) => {
     const Nob = req.body.Nob;
     let job = "";
@@ -12,23 +28,34 @@ router.post("/login", asyncHandler(async (req, res) => {
     if (Nob[0] == "t") {
         //老师端登录
         result = await teaSer.login(Nob, req.body.password);
+        if (!result) {
+            res.status(403).send(getErr("账号密码错误", 403));
+            return null;
+        }
         job = "t";
+        result.job = "teacher";
     }
     else if (Nob[0] == "1") {
         //学生端登录
         result = await stdSer.login(Nob, req.body.password);
+        if (!result) {
+            res.status(403).send(getErr("账号密码错误", 403));
+            return null;
+        }
         job = "s";
+        result.job = "student";
     } else {
         //超级管理员端登录
         result = await adminSer.login(Nob, req.body.password);
+        if (!result) {
+            res.status(403).send(getErr("密码错误", 403));
+            return null;
+        }
         job = "a";
+        result.job = "admin";
     }
-    if (result) {
-        setCookie(res, result, job);
-        return result;
-    } else {
-        return null;
-    }
+    setCookie(res, result, job);
+    return result;
 }));
 function setCookie(res, result, job) {
     //登录成功,返回一个crypto加密的cookie

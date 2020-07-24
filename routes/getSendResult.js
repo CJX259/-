@@ -7,7 +7,7 @@ module.exports.getErr = (err="server internal error", errCode = 500)=>{
     };
 }
 
-module.exports.getResult = (result, msg="")=>{
+module.exports.getResult = (result, msg="success")=>{
     return {
         msg: msg,
         data: result,

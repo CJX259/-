@@ -3,7 +3,7 @@ const Teacher = require("../modules/Teacher");
 const { Op } = require("sequelize");
 
 async function addTeacher(tObj) {
-    if(typeof tObj != "object"){
+    if (typeof tObj != "object") {
         console.log("传入老师数据有误");
         return null;
     }
@@ -18,7 +18,7 @@ async function addTeacher(tObj) {
 }
 
 async function updateTeacher(id, tObj) {
-    if(typeof tObj != "object"){
+    if (typeof tObj != "object") {
         console.log("传入老师数据有误");
         return null;
     }
@@ -60,22 +60,38 @@ async function getTeacherById(id) {
 }
 async function login(Nob, pwd) {
     pwd = md5(pwd);
-    const res = await Teacher.findOne({
-        where: {
-            [Op.and]: [
-                {Nob : Nob},
-                {password : pwd}
-            ]
-        },
-        attributes : ["id", "Nob", "name"]
-    });
-    return JSON.parse(JSON.stringify(res));
-}
+    try {
+        const res = await Teacher.findOne({
+            where: {
+                [Op.and]: [
+                    { Nob: Nob },
+                    { password: pwd }
+                ]
+            },
+            attributes: ["id", "Nob", "name"]
+        });
+        return JSON.parse(JSON.stringify(res));
+    } catch (e) {
+        return JSON.parse(JSON.stringify(e));
+    }
 
+}
+async function getDetailById(id) {
+    try {
+        const res = await Teacher.findByPk(id,
+            {
+                attributes: ["id", "Nob", "name"]
+            });
+        return JSON.parse(JSON.stringify(res));
+    } catch (err) {
+        return JSON.parse(JSON.stringify(err));
+    }
+}
 module.exports = {
     addTeacher,
     updateTeacher,
     deleteTeacher,
     getTeacherById,
-    login
+    login,
+    getDetailById
 }
