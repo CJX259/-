@@ -35,15 +35,15 @@ export default class StudentForm extends Component {
                 <Form name="loginUser" {...FormConfig} className="resetPwd_form" onFinish={this.onFinish}>
                     <Form.Item
                         name="nPassword"
-                        rules={[{ required: true, message: 'Please input your New Password!' }]}
+                        rules={[{ required: true, message: '请输入新密码!' }]}
                         label="新密码">
-                        <Input type="password" prefix={<LockOutlined />} placeholder="New password" />
+                        <Input type="password" prefix={<LockOutlined />} placeholder="请输入新密码" />
                     </Form.Item>
                     <Form.Item
                         name="cPassword"
-                        rules={[{ required: true, message: 'Please input your New Password!' }]}
+                        rules={[{ required: true, message: '请输出新密码!' }]}
                         label="确认密码">
-                        <Input type="password" prefix={<LockOutlined />} placeholder="conform new password" />
+                        <Input type="password" prefix={<LockOutlined />} placeholder="确认密码" />
                     </Form.Item>
                     <Form.Item wrapperCol={24} className="resetPwd_btn">
                         <Button type="primary" htmlType="submit">

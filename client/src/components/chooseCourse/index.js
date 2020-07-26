@@ -117,7 +117,7 @@ export default class Course extends Component {
     render() {
         return (
             <Spin spinning={this.state.isLoading}>
-                <Table className="course_table" dataSource={this.state.courses}>
+                <Table className="course_table" dataSource={this.state.courses} pagination={false}>
                     <Column title="课程" dataIndex="name" key="name" />
                     <Column title="星期" dataIndex="weekDay" key="weekDay" />
                     <Column title="时间" dataIndex="time" key="time" />
@@ -126,7 +126,9 @@ export default class Course extends Component {
                     <Column title="课容量" key="capacity"
                         render={(record) => {
                             return (
-                                <Space>{record.nowCount}/{record.capacity}</Space>
+                                <Space>{record.nowCount}/{record.capacity}
+                                    {record.nowCount == record.capacity ? <Tag color="red">已满</Tag> : ""}
+                                </Space>
                             )
                         }}
                     />

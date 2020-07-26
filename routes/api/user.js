@@ -62,7 +62,7 @@ function setCookie(res, result, job) {
     //加密id，作为token返回
     let value = crypt.encrypt(job + result.id + "");
     res.cookie("token", value, {
-        maxAge: 60 * 1000 * 10
+        maxAge: 60 * 1000 * 30
     });
     //给移动端设置
     // res.header("authorization",value);

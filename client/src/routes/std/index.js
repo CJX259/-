@@ -46,6 +46,7 @@ class Student extends Component {
             openKeys: e
         })
     }
+    
     logout = (e) => {
         // 删掉cookie
         let flag = window.confirm("确定退出登录吗?");
@@ -70,8 +71,7 @@ class Student extends Component {
                             <Link to={{
                                 pathname: "/index",
                                 state: this.props.userObj
-                            }}>
-                                主页
+                            }}>主页
                             </Link>
                         </Menu.Item>
                         <Menu.Item onClick={this.clickMenu} key="2" icon={<UserOutlined />}>

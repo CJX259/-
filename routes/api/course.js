@@ -93,6 +93,7 @@ router.get("/outStudent", asyncHandler(async (req, res) => {
     if (req.job === "t") {
         let flag = false;
         const course = await Course.getCourseByCid(req.query.cid);
+        console.log(course);
         if (course.TeacherId == req.userId) {
             flag = true;
         }
