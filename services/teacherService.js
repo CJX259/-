@@ -87,11 +87,22 @@ async function getDetailById(id) {
         return JSON.parse(JSON.stringify(err));
     }
 }
+async function getAllTeacher(){
+    try{
+        const res = await Teacher.findAndCountAll({
+            attributes : ["id", "name", "Nob"]
+        });
+        return JSON.parse(JSON.stringify(res));
+    }catch(err){
+        return JSON.parse(JSON.stringify(err));
+    }
+}
 module.exports = {
     addTeacher,
     updateTeacher,
     deleteTeacher,
     getTeacherById,
     login,
-    getDetailById
+    getDetailById,
+    getAllTeacher
 }

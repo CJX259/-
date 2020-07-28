@@ -81,11 +81,22 @@ async function getDetailById(id) {
         return JSON.parse(JSON.stringify(err));
     }
 }
+async function getAllStudent(){
+    try{
+        const res = await Student.findAndCountAll({
+            attributes : ["id", "name", "Nob"]
+        });
+        return JSON.parse(JSON.stringify(res));
+    }catch(err){
+        return JSON.parse(JSON.stringify(err));
+    }
+}
 module.exports = {
     addStd,
     updateStd,
     deleteStd,
     login,
     getStdById,
-    getDetailById
+    getDetailById,
+    getAllStudent
 }

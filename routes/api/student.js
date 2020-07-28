@@ -87,5 +87,8 @@ router.get('/showCourse', asyncHandler(async (req, res) => {
         res.status(403).send(getErr("暂无权限", 403));
     }
 }))
-
+router.get("/getAllStudent", asyncHandler(async (req,res)=>{
+    const result = await stdSer.getAllStudent();
+    return result;
+}))
 module.exports = router;

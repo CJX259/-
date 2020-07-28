@@ -8,7 +8,7 @@ import {
     InputNumber,
     message
 } from 'antd';
-import { addCourse } from "../../services/courseSer";
+import {  updateCourse } from "../../services/courseSer";
 const { Option } = Select;
 const time = [
     {
@@ -92,20 +92,33 @@ const tailFormItemLayout = {
         },
         md: {
             span: 10,
-            offset: 5
+            offset: 4
         }
     },
 };
 
 const building = [
-    "文新", "文清", "理学楼南楼", "理学楼北楼", "计算机实验楼"
+    "文新楼", "文清楼", "理学楼南楼", "理学楼北楼", "计算机实验楼"
 ]
-const AddCourse = () => {
+/**
+ * 
+ * @param {*} props 
+ * course当前的课程
+ * onSetVisible关闭modal
+ * reqCourse请求新的课程
+ */
+const AddCourse = (props) => {
+    // console.log(props);
+    // 解析props
+    props.course.building = building.filter(item => {
+        var a = props.course.place.search(item);
+        return a != -1
+    })[0];
+    props.course.class = props.course.place.replace(props.course.building, "");
     const [form] = Form.useForm();
 
-    const onFinish =async values => {
-        values.capacity = +values.capacity;
-        values.score = +values.score;
+    const onFinish = async values => {
+        // 去掉undefined
         if (typeof values.capacity != "number" || typeof values.score != "number") {
             message.error("课容量或学分必须为数字！", 1);
             return;
@@ -113,13 +126,16 @@ const AddCourse = () => {
         values.place = values.building + values.class;
         values.time = values.timeAndWeek[1];
         values.weekDay = values.timeAndWeek[0];
+        values.id = props.course.id;
         let result = null;
-        result = await addCourse(values);
-        if(result && result.data.msg === "success"){
-            message.success("添加成功",3);
-        }else{
-            message.error("添加失败",3);
+        result = await updateCourse(values.id, values);
+        if (result && result.data.msg === "success") {
+            message.success("添加成功", 3);
+        } else {
+            message.error("添加失败", 3);
         }
+        props.reqCourse();
+        props.onSetVisible(false);
     };
 
     const prefixSelector = (
@@ -144,9 +160,12 @@ const AddCourse = () => {
             name="course"
             onFinish={onFinish}
             initialValues={{
-                building: '文新',
-                capacity: 60,
-                score: 2
+                building: props.course.building,
+                capacity: props.course.capacity,
+                score: props.course.score,
+                class : props.course.class,
+                name : props.course.name,
+                timeAndWeek : [props.course.weekDay+"", props.course.time]
             }}
             scrollToFirstError
         >
@@ -157,39 +176,21 @@ const AddCourse = () => {
                         课程名称&nbsp;
                     </span>
                 }
-                rules={[
-                    {
-                        required: true,
-                        message: '请输入课程名称'
-                    },
-                ]}
             >
-                <Input />
+                <Input placeholder={props.course.name} />
             </Form.Item>
 
             <Form.Item
                 name="timeAndWeek"
                 label="上课时间"
-                rules={[
-                    {
-                        type: 'array',
-                        required: true,
-                        message: '必须选择上课时间',
-                    },
-                ]}
             >
-                <Cascader placeholder="请选择上课时间" options={timeAndWeek} />
+                <Cascader  options={timeAndWeek} />
             </Form.Item>
 
             <Form.Item
                 name="class"
                 label="上课地点"
-                rules={[
-                    {
-                        required: true,
-                        message: '必须填写上课地点!',
-                    },
-                ]}
+                wrapperCol={{ span: 10 }}
             >
                 <Input
                     addonBefore={prefixSelector}
@@ -204,12 +205,6 @@ const AddCourse = () => {
             <Form.Item
                 name="capacity"
                 label="课容量"
-                rules={[
-                    {
-                        required: true,
-                        message: '必须填写课容量!',
-                    },
-                ]}
             >
                 <InputNumber
                     min={1}
@@ -219,12 +214,6 @@ const AddCourse = () => {
             <Form.Item
                 name="score"
                 label="学分"
-                rules={[
-                    {
-                        required: true,
-                        message: '必须填写学分!',
-                    },
-                ]}
             >
                 <InputNumber
                     min={1}
@@ -233,7 +222,7 @@ const AddCourse = () => {
             </Form.Item>
             <Form.Item {...tailFormItemLayout}>
                 <Button type="primary" htmlType="submit">
-                    添加课程
+                    更新课程
                 </Button>
             </Form.Item>
         </Form>

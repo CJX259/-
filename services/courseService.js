@@ -30,6 +30,7 @@ async function updateCourse(id, courseObj) {
         return e;
     }
 }
+
 async function deleteCourse(id) {
     try {
         const res = await Course.destroy({

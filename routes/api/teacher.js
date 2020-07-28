@@ -81,4 +81,8 @@ router.get("/getTeacherById", asyncHandler(async (req, res) => {
     const result = await teaSer.getDetailById(req.query.tid);
     return result;
 }))
+router.get("/getAllTeacher", asyncHandler(async (req,res)=>{
+    const result = await teaSer.getAllTeacher();
+    return result;
+}))
 module.exports = router;

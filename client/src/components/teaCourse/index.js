@@ -21,17 +21,19 @@ function TeaCourse() {
     async function requestData() {
         setIsLoading(true);
         let result = await getTeacherCourse();
-        result.data.data.rows = result.data.data.rows.map(async item => {
-            // console.log(item);
-            let chooseStd = await showStudent(item.id);
-            item.chooseStd = chooseStd.data.data;
-            // return chooseStd.data.data;
-            return item;
-        })
-        Promise.all(result.data.data.rows).then(res => {
-            setCourses(res);
-            setIsLoading(false);
-        })
+        if (result) {
+            result.data.data.rows = result.data.data.rows.map(async item => {
+                // console.log(item);
+                let chooseStd = await showStudent(item.id);
+                item.chooseStd = chooseStd.data.data;
+                // return chooseStd.data.data;
+                return item;
+            })
+            Promise.all(result.data.data.rows).then(res => {
+                setCourses(res);
+                setIsLoading(false);
+            })
+        }
     }
     const deleteCourse = async (record) => {
         let flag = window.confirm("确认删除该课程吗？");
@@ -61,10 +63,10 @@ function TeaCourse() {
     function handleOk() {
         setMLoading(true);
         // 没有选到人
-        if(outStdInACourse.outStd.length == 0){
+        if (outStdInACourse.outStd.length == 0) {
             handleCancel();
             setMLoading(false);
-            return ;
+            return;
         }
         // 对outStd里的所有学生进行删除
         let flag = window.confirm("确定删除这些学生吗?");

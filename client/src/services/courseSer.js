@@ -58,3 +58,13 @@ export async function delCourse(cid) {
         return err;
     })
 }
+export async function updateCourse(cid, cObj) {
+    return await axios.post(`/api/course/updateCourse`,{
+        cid : cid,
+        ...cObj
+    }).then(res => {
+        return res;
+    }).catch(function (err) {
+        console.log(err);
+    })
+}
