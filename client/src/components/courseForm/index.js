@@ -129,7 +129,7 @@ const AddCourse = (props) => {
         values.id = props.course.id;
         let result = null;
         result = await updateCourse(values.id, values);
-        if (result && result.data.msg === "success") {
+        if (typeof result.data.data != "string") {
             message.success("添加成功", 3);
         } else {
             message.error("添加失败", 3);

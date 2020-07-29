@@ -4,21 +4,22 @@ const { Op } = require("sequelize");
 
 async function addStd(stdObj) {
     if (typeof stdObj != "object") {
-        console.log("传入学生数据有误");
+        // console.log("传入学生数据有误");
         return null;
     }
     stdObj.password = md5(stdObj.password);
     try {
         const res = await Student.create(stdObj);
-        console.log('添加成功');
+        // console.log('添加成功');
         return res.toJSON();
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 async function updateStd(id, stdObj) {
     if (typeof stdObj != "object") {
-        console.log("传入学生数据有误");
+        // console.log("传入学生数据有误");
         return null;
     }
     stdObj.password = stdObj.password ? md5(stdObj.password) : undefined;
@@ -28,10 +29,11 @@ async function updateStd(id, stdObj) {
                 id: id
             }
         });
-        console.log("修改学生id：" + id + "，成功");
+        // console.log("修改学生id：" + id + "，成功");
         return res;
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 async function deleteStd(id) {
@@ -41,10 +43,11 @@ async function deleteStd(id) {
                 id: id
             }
         });
-        console.log("学生：" + id + "删除成功");
+        // console.log("学生：" + id + "删除成功");
         return res;
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 //学生端登录
@@ -62,7 +65,8 @@ async function login(Nob, pwd) {
         });
         return JSON.parse(JSON.stringify(res));
     } catch (e) {
-        return JSON.parse(JSON.stringify(e));
+        console.log(e);
+        return null;
     }
 
 }
@@ -77,8 +81,9 @@ async function getDetailById(id) {
                 attributes: ["id", "Nob", "name"]
             });
         return JSON.parse(JSON.stringify(res));
-    } catch (err) {
-        return JSON.parse(JSON.stringify(err));
+    } catch (e) {
+        console.log(e);
+        return null;
     }
 }
 async function getAllStudent(){
@@ -87,8 +92,9 @@ async function getAllStudent(){
             attributes : ["id", "name", "Nob"]
         });
         return JSON.parse(JSON.stringify(res));
-    }catch(err){
-        return JSON.parse(JSON.stringify(err));
+    }catch(e){
+        console.log(e);
+        return null;
     }
 }
 module.exports = {

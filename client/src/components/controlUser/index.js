@@ -40,10 +40,12 @@ function ControlUser(props) {
         } else {
             message.error("识别查找信息出错", 3);
         }
-        if (result) {
+        if (typeof result.data.data != "string") {
             message.success("删除成功！", 1);
             // 刷新内容
             localJob === "teacher" ? requestAllTeacher() : requestAllStudent();
+        }else{
+            message.error("删除操作出错",2);
         }
     }
     async function handleOk() {
@@ -52,7 +54,7 @@ function ControlUser(props) {
     function handleCancel() {
         setVisible(false);
         // 重置当前的user
-        console.log("取消");
+        
         setCurrentUser({});
     }
     // 查找的用户们

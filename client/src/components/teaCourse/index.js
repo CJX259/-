@@ -21,7 +21,7 @@ function TeaCourse() {
     async function requestData() {
         setIsLoading(true);
         let result = await getTeacherCourse();
-        if (result) {
+        if (typeof result.data.data != "string") {
             result.data.data.rows = result.data.data.rows.map(async item => {
                 // console.log(item);
                 let chooseStd = await showStudent(item.id);
@@ -42,12 +42,10 @@ function TeaCourse() {
         }
         let result = "";
         result = await delCourse(record.id);
-        if (result.data.code == "403") {
-            message.error(result.data.msg, 3);
-        } else if (result.data.msg == "success") {
+        if (typeof result.data.data != "string") {
             message.success("删除成功", 2);
-        } else {
-            message.error("删除失败", 3);
+        } else if (typeof result.data.data == "string") {
+            message.error(result.data.data, 3);
         }
         // 刷新一下课程信息
         requestData()
@@ -78,7 +76,7 @@ function TeaCourse() {
             return await outStd(outStdInACourse.courseId, std);
         })
         Promise.all(result).then(res => {
-            if (res[0].data.msg === "success") {
+            if (typeof res[0].data.data !="string") {
                 message.success("删除成功", 2);
             } else {
                 message.error("操作失败", 2);

@@ -13,14 +13,11 @@ class LoginForm extends Component {
             isLoading: true
         });
         const resp = await login(Nob, password);
-        if (resp) {
+        if (typeof resp.data.data != "string") {
             await message.success("登录成功", 1);
-            // this.cookie = document.cookie.split("=")[1];
-            // window.localStorage.setItem("token", this.cookie);
             this.props.history.push("/index");
-            // console.log(this.props);
         } else {
-            message.error("账号密码错误", 3);
+            message.error(resp.data.data, 3);
         }
         this.setState({
             isLoading: false

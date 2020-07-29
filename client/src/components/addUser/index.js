@@ -45,20 +45,17 @@ function AddUser(props) {
         } else {
             message.error("识别信息出错", 3);
         }
-        if(result && !result.data.data.errors){
+        if(typeof result.data.data != "string" && !result.data.data.errors){
             message.success("添加成功",1);
         }else{
             message.error(result.data.data.errors[0].message,4);
         }
     }
-    const [refresh, setRefresh] = useState(false);
     useEffect(() => {
-        setRefresh(true);
         window.localStorage.setItem("controlJob", props.location.state);
         return () => {
             // 离开的时候会触发  刷新不会触发,也就是说刷新后依然有，不会被删掉
             window.localStorage.removeItem("controlJob");
-            setRefresh(false);
         }
     }, [props.location.pathname])
     return (

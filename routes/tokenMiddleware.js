@@ -52,4 +52,5 @@ module.exports = (req, res, next)=>{
 }
 function handleNoToken(req,res,next){
     res.status(403).send(getErr("you don't have a token", 403));
+    return null;
 }

@@ -16,14 +16,14 @@ export default function ShowCourse(props) {
     const requestCourse = async () => {
         setIsLoading(true);
         const result = await getAllCourses();
-        let courses = result ? result.data.data : [];
+        let courses = typeof result.data.data !="string" ? result.data.data : [];
 
         courses = courses.map(async (item) => {
             item.key = item.id;
             const res = await getTeacherById(item.TeacherId);
             const count = await showStudent(item.id);
-            item.nowCount = count ? count.data.data.length : 0;
-            item.teacherName = res ? res.data.data.name : "";
+            item.nowCount = typeof count.data.data !="string"  ? count.data.data.length : 0;
+            item.teacherName = typeof res.data.data !="string" ? res.data.data.name : "";
             return item;
         })
         // });
@@ -41,13 +41,11 @@ export default function ShowCourse(props) {
     }, [])
     const [courses, setCourses] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [mLoading, setMLoading] = useState(false);
     const [mVisible, setMVisible] = useState(false);
     const [current, setCurrent] = useState({});
 
     const handleOk = (values) => {
-        console.log(values);
-        console.log("ok")
+        
     }
     const handleCancel = () => {
         setMVisible(false);
@@ -62,7 +60,8 @@ export default function ShowCourse(props) {
             return null;
         }
         let result = await delCourse(record.id);
-        if (result && result.data) {
+        console.log(result);
+        if (typeof result.data.data !="string") {
             message.success('删除成功', 2);
         }
         else {

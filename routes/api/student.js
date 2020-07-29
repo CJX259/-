@@ -10,8 +10,8 @@ router.post("/addStd", asyncHandler(async (req, res) => {
         const result = await stdSer.addStd(req.body);
         return result;
     } else {
-        console.log("暂无权限");
-        res.status(403).send(getErr("暂无权限", 403));
+        // console.log("暂无权限");
+        return "暂无权限";
     }
 }))
 //学生端和管理员端（管理员要传学生id  sid）
@@ -23,55 +23,50 @@ router.post("/updateStd", asyncHandler(async (req, res) => {
         const result = await stdSer.updateStd(req.userId, req.body);
         return result;
     } else {
-        console.log("暂无权限");
-        res.status(403).send(getErr("暂无权限", 403));
+        return "暂无权限";
     }
 }))
 router.get("/delStd", asyncHandler(async (req, res) => {
     // console.log(req.query.sid);
     if (!req.query.sid) {
-        res.status(403).send(getErr("未传参数", 403));
-        return null
+        return "未传参数";
     }
     if (req.job === "a") {
         const result = await stdSer.deleteStd(req.query.sid);
         return result;
     } else {
-        console.log("暂无权限");
-        res.status(403).send(getErr("暂无权限", 403));
-        return null
+        // console.log("暂无权限");
+        return ("暂无权限");
     }
 }))
 //学生选课  需要学生id和课程id  sid与cid  仅学生端     如果选一个不存在的cid会怎样？报错
 router.get("/chooseCourse", asyncHandler(async (req, res) => {
     // console.log(req.query.sid);
     if (!req.query.cid) {
-        res.status(403).send(getErr("未传参数", 403));
-        return null
+        return "未传参数"
     }
     // 
     if (req.job === "s") {
         const result = await mapSer.stdChooseCourse(req.userId, req.query.cid);
-        console.log('完成选课');
+        // console.log('完成选课');
         return result;
     } else {
-        console.log("暂无权限");
-        res.status(403).send(getErr("暂无权限", 403));
+        return ("暂无权限");
     }
 }))
 //显示学生课表  学生端可用，管理员需要传sid
 router.get('/showCourse', asyncHandler(async (req, res) => {
     if (req.job == "a") {
         if (!req.query.sid) {
-            console.log("缺少参数sid");
-            res.status(403).send(getErr("缺少参数sid", 403));
+            // console.log("缺少参数sid");
+            return "缺少参数sid";
         }
         let courses = await mapSer.showCourseBySid(req.query.sid);
         let result = [];
         for (let i = 0; i < courses.rows.length; i++) {
             result[i] = await courseSer.getCourseByCid(courses.rows[i].CourseId)
         }
-        console.log("查询成功");
+        // console.log("查询成功");
         //通过courseId查询course
         return result;
     } else if (req.job == "s") {
@@ -80,11 +75,11 @@ router.get('/showCourse', asyncHandler(async (req, res) => {
         for (let i = 0; i < courses.rows.length; i++) {
             result[i] = await courseSer.getCourseByCid(courses.rows[i].CourseId)
         }
-        console.log("查询成功");
+        // console.log("查询成功");
         return result;
     } else {
-        console.log("暂无权限");
-        res.status(403).send(getErr("暂无权限", 403));
+        // console.log("暂无权限");
+        return "暂无权限";
     }
 }))
 router.get("/getAllStudent", asyncHandler(async (req,res)=>{

@@ -19,6 +19,7 @@ module.exports.asyncHandler =  (handle)=>{
         try{
             const result = await handle(req,res,next);
             res.send(module.exports.getResult(result));
+            return null;
         }catch(e){
             next(e);
         }

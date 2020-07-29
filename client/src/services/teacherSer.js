@@ -7,6 +7,7 @@ export async function getTeacherById(tid){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 
@@ -15,6 +16,7 @@ export async function getTeacherCourse(){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function getAllTeacher(){
@@ -22,6 +24,7 @@ export async function getAllTeacher(){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function delTeacher(tid){
@@ -29,6 +32,7 @@ export async function delTeacher(tid){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function updateTeacher(tid, tObj){
@@ -39,6 +43,7 @@ export async function updateTeacher(tid, tObj){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function addTea(tObj){

@@ -29,8 +29,7 @@ router.post("/login", asyncHandler(async (req, res) => {
         //老师端登录
         result = await teaSer.login(Nob, req.body.password);
         if (!result) {
-            res.status(403).send(getErr("账号密码错误", 403));
-            return null;
+            return "账号密码错误";
         }
         job = "t";
         result.job = "teacher";
@@ -39,8 +38,7 @@ router.post("/login", asyncHandler(async (req, res) => {
         //学生端登录
         result = await stdSer.login(Nob, req.body.password);
         if (!result) {
-            res.status(403).send(getErr("账号密码错误", 403));
-            return null;
+            return "账号密码错误";
         }
         job = "s";
         result.job = "student";
@@ -48,8 +46,7 @@ router.post("/login", asyncHandler(async (req, res) => {
         //超级管理员端登录
         result = await adminSer.login(Nob, req.body.password);
         if (!result) {
-            res.status(403).send(getErr("密码错误", 403));
-            return null;
+            return "密码错误";
         }
         job = "a";
         result.job = "admin";
@@ -85,7 +82,7 @@ router.post("/resetPwd", asyncHandler(async (req, res) => {
         })
     };
     if (result) {
-        console.log("修改完毕");
+        // console.log("修改完毕");
         return result;
     }
     return null;

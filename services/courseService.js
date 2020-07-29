@@ -1,21 +1,22 @@
 const Course = require("../modules/Course");
 // 查询的时候若需要查外键记得设置include属性！！！
 async function addCourse(courseObj) {
-    if(typeof courseObj != "object"){
-        console.log("传入课程数据有误");
+    if (typeof courseObj != "object") {
+        // console.log("传入课程数据有误");
         return null;
     }
     try {
         const res = await Course.create(courseObj);
-        console.log("课程创建成功");
+        // console.log("课程创建成功");
         return res.toJSON();
     } catch (e) {
-        return e;
+        console.log(err);
+        return null;
     }
 }
 async function updateCourse(id, courseObj) {
-    if(typeof courseObj != "object"){
-        console.log("传入课程数据有误");
+    if (typeof courseObj != "object") {
+        // console.log("传入课程数据有误");
         return null;
     }
     try {
@@ -24,10 +25,11 @@ async function updateCourse(id, courseObj) {
                 id: id
             }
         });
-        console.log('课程更新成功');
+        // console.log('课程更新成功');
         return res;
     } catch (e) {
-        return e;
+        console.log(err);
+        return null;
     }
 }
 
@@ -38,10 +40,11 @@ async function deleteCourse(id) {
                 id: id
             }
         });
-        console.log("课程删除成功");
+        // console.log("课程删除成功");
         return res;
     } catch (e) {
-        return e;
+        console.log(err);
+        return null;
     }
 }
 
@@ -53,12 +56,23 @@ async function getCourseByTeacher(tid) {
     return JSON.parse(JSON.stringify(result));
 }
 async function getCourseByCid(cid) {
-    const result = await Course.findByPk(cid);
-    return JSON.parse(JSON.stringify(result));
+    try {
+        const result = await Course.findByPk(cid);
+        return JSON.parse(JSON.stringify(result));
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
+
 }
-async function getAllCourse(){
-    const result = await Course.findAll();
-    return JSON.parse(JSON.stringify(result));
+async function getAllCourse() {
+    try {
+        const result = await Course.findAll();
+        return JSON.parse(JSON.stringify(result));
+    } catch (err) {
+        console.log(err);
+        return null;
+    }
 }
 module.exports = {
     addCourse,

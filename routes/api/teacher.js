@@ -8,8 +8,8 @@ const CourseSer = require('../../services/courseService');
  */
 router.post("/updateTeacher", asyncHandler(async (req, res) => {
     if (req.job === "s" || !req.job) {
-        console.log("无权访问");
-        res.status(403).send(getErr("暂无权限", 403));
+        // console.log("无权访问");
+        return "暂无权限";
     }
     let result = null;
     if (req.job === "t") {
@@ -19,7 +19,7 @@ router.post("/updateTeacher", asyncHandler(async (req, res) => {
         result = await teaSer.updateTeacher(req.body.tid, req.body);
     }
     if (result) {
-        console.log("更新完毕");
+        // console.log("更新完毕");
         return result;
     }
     return null;
@@ -30,13 +30,12 @@ router.post("/addTeacher", asyncHandler(async (req, res) => {
     //admin端
     if (req.job == "a") {
         result = await teaSer.addTeacher(req.body);
+        return result;
     } else {
-        console.log("无权访问");
-        res.status(403).send(getErr("暂无权限", 403));
-        return null;
+        // console.log("无权访问");
+        return "暂无权限";
     }
-    console.log(result);
-    return result;
+    // console.log(result);
 }))
 
 //仅admin端 需要给tid
@@ -45,20 +44,17 @@ router.get("/delTeacher", asyncHandler(async (req, res) => {
     //admin端
     if (req.job == "a") {
         result = await teaSer.deleteTeacher(req.query.tid);
+        return result;
     } else {
-        console.log("无权访问");
-        res.status(403).send(getErr("暂无权限", 403));
-        return null;
+        // console.log("无权访问");
+        return "暂无权限";
     }
-    console.log(result);
-    return result;
 }))
 
 //显示老师课表  管理员和老师端可用
 router.get("/showCourse", asyncHandler(async (req, res) => {
     if (req.job !== "a" && req.job !== 't') {
-        res.status(403).send(getErr("暂无权限", 403));
-        return null;
+        return "暂无权限";
     }
     if (req.job == "t") {
         const result = await CourseSer.getCourseByTeacher(req.userId);
@@ -66,8 +62,7 @@ router.get("/showCourse", asyncHandler(async (req, res) => {
     }
     if (req.job == "a") {
         if (!req.query.tid) {
-            res.status(403).send(getErr("缺少参数", 403));
-            return null;
+            return "缺少参数";
         }
         const result = await CourseSer.getCourseByTeacher(req.query.tid);
         return result;
@@ -75,13 +70,12 @@ router.get("/showCourse", asyncHandler(async (req, res) => {
 }))
 router.get("/getTeacherById", asyncHandler(async (req, res) => {
     if (!req.query.tid) {
-        res.status(403).send(getErr("缺少参数", 403));
-        return null;
+        return "缺少参数";
     }
     const result = await teaSer.getDetailById(req.query.tid);
     return result;
 }))
-router.get("/getAllTeacher", asyncHandler(async (req,res)=>{
+router.get("/getAllTeacher", asyncHandler(async (req, res) => {
     const result = await teaSer.getAllTeacher();
     return result;
 }))

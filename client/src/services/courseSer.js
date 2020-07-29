@@ -6,6 +6,7 @@ export async function getAllCourses() {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 // 返回学生已选课程
@@ -14,6 +15,7 @@ export async function getChooseCourse() {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 // std端 选课
@@ -22,6 +24,7 @@ export async function chooseCourseFromStd(cid) {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 // std端 退课
@@ -30,6 +33,7 @@ export async function outCourse(cid) {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 //   拿到已经选择该课程的学生
@@ -38,6 +42,7 @@ export async function showStudent(cid) {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 // tea 
@@ -48,6 +53,7 @@ export async function addCourse(courseObj, tid) {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }
 export async function delCourse(cid) {
@@ -66,5 +72,6 @@ export async function updateCourse(cid, cObj) {
         return res;
     }).catch(function (err) {
         console.log(err);
+        return err;
     })
 }

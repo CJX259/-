@@ -29,17 +29,15 @@ export default class courseTable extends Component {
     this.setState({
       isLoading: true
     })
-    console.log(this.props.location.state);
     let result = null;
     let courses = [];
     if (this.props.location.state.job == "teacher") {
       //teacher端的请求课表
       result = await getTeacherCourse();
-      courses = result ? result.data.data.rows : [];
-      console.log(courses);
+      courses = typeof result.data.data != "string" ? result.data.data.rows : [];
     } else if (this.props.location.state.job == "student") {
       result = await getChooseCourse();
-      courses = result ? result.data.data : [];
+      courses = typeof result.data.data != "string" ? result.data.data : [];
     }
     this.setState({
       courses: courses

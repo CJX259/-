@@ -10,10 +10,11 @@ async function stdChooseCourse(sid, cid) {
     try {
         let obj = { CourseId: cid, StudentId: sid };
         const res = await Coursestudent.create(obj);
-        console.log("选课成功");
+        // console.log("选课成功");
         return res.toJSON();
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 /**
@@ -32,10 +33,11 @@ async function deleteMap(sid, cid) {
                 ]
             }
         });
-        console.log("退课成功");
+        // console.log("退课成功");
         return res;
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 //通过学生id查找该学生已选的课程
@@ -46,12 +48,13 @@ async function showCourseBySid(sid) {
                 StudentId :sid
             }
         });
-        console.log("查询成功");
+        // console.log("查询成功");
         res.rows = JSON.parse(JSON.stringify(res.rows));
         // console.log(res);
         return res;
     }catch(e){
-        return e;
+        console.log(e);
+        return null;
     }
 }
 
@@ -63,12 +66,13 @@ async function showStdByCid(cid) {
                 CourseId :cid
             }
         });
-        console.log("查询成功");
+        // console.log("查询成功");
         res.rows = JSON.parse(JSON.stringify(res.rows));
         // console.log(res);
         return res;
     }catch(e){
-        return e;
+        console.log(e);
+        return null;
     }
 }
 

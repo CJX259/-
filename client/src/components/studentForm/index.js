@@ -18,8 +18,12 @@ export default class StudentForm extends Component {
             message.error("前后密码不一致", 3);
             return null;
         }
-        await resetPassword(values.nPassword);
-        message.success("修改成功", 2);
+        let result = await resetPassword(values.nPassword);
+        if(typeof result.data.data !="string"){
+            message.success("修改成功", 2);
+        }else{
+            message.error(result.data.data,2);
+        }
     }
     render() {
         const FormConfig = {

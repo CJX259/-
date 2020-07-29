@@ -4,22 +4,23 @@ const { Op } = require("sequelize");
 
 async function addTeacher(tObj) {
     if (typeof tObj != "object") {
-        console.log("传入老师数据有误");
+        // console.log("传入老师数据有误");
         return null;
     }
     tObj.password = md5(tObj.password);
     try {
         const res = await Teacher.create(tObj);
-        console.log("添加老师成功");
+        // console.log("添加老师成功");
         return res.toJSON();
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 
 async function updateTeacher(id, tObj) {
     if (typeof tObj != "object") {
-        console.log("传入老师数据有误");
+        // console.log("传入老师数据有误");
         return null;
     }
     tObj.password = tObj.password ? md5(tObj.password) : undefined;
@@ -29,10 +30,11 @@ async function updateTeacher(id, tObj) {
                 id: id
             }
         });
-        console.log('修改老师数据成功');
+        // console.log('修改老师数据成功');
         return res;
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 
@@ -43,10 +45,11 @@ async function deleteTeacher(id) {
                 id: id
             }
         });
-        console.log("删除老师数据成功");
+        // console.log("删除老师数据成功");
         return res;
     } catch (e) {
-        return e;
+        console.log(e);
+        return null;
     }
 }
 async function getTeacherById(id) {
@@ -72,7 +75,8 @@ async function login(Nob, pwd) {
         });
         return JSON.parse(JSON.stringify(res));
     } catch (e) {
-        return JSON.parse(JSON.stringify(e));
+        console.log(e);
+        return null;
     }
 
 }
@@ -83,8 +87,9 @@ async function getDetailById(id) {
                 attributes: ["id", "Nob", "name"]
             });
         return JSON.parse(JSON.stringify(res));
-    } catch (err) {
-        return JSON.parse(JSON.stringify(err));
+    } catch (e) {
+        console.log(e);
+        return null;
     }
 }
 async function getAllTeacher(){
@@ -93,8 +98,9 @@ async function getAllTeacher(){
             attributes : ["id", "name", "Nob"]
         });
         return JSON.parse(JSON.stringify(res));
-    }catch(err){
-        return JSON.parse(JSON.stringify(err));
+    }catch(e){
+        console.log(e);
+        return null;
     }
 }
 module.exports = {
