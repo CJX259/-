@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Form,
     Input,
@@ -98,7 +98,7 @@ const tailFormItemLayout = {
 };
 
 const building = [
-    "文新", "文清", "理学楼南楼", "理学楼北楼", "计算机实验楼"
+    "文新楼", "文清楼", "理学楼南楼", "理学楼北楼", "计算机实验楼"
 ]
 const AddCourse = () => {
     const [form] = Form.useForm();

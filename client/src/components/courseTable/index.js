@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import "./index.css";
-import { Table, Tag, Space } from 'antd';
+import { Table } from 'antd';
 import { getChooseCourse } from "../../services/courseSer";
 import {getTeacherCourse} from "../../services/teacherSer";
 import { deepClone } from '../../utils';
@@ -31,13 +31,13 @@ export default class courseTable extends Component {
     })
     let result = null;
     let courses = [];
-    if (this.props.location.state.job == "teacher") {
+    if (this.props.location.state.job === "teacher") {
       //teacher端的请求课表
       result = await getTeacherCourse();
-      courses = typeof result.data.data != "string" ? result.data.data.rows : [];
-    } else if (this.props.location.state.job == "student") {
+      courses = typeof result.data.data !== "string" ? result.data.data.rows : [];
+    } else if (this.props.location.state.job === "student") {
       result = await getChooseCourse();
-      courses = typeof result.data.data != "string" ? result.data.data : [];
+      courses = typeof result.data.data !== "string" ? result.data.data : [];
     }
     this.setState({
       courses: courses
@@ -45,7 +45,7 @@ export default class courseTable extends Component {
     const timeArray = ["08:30:00", "10:25:00", "13:50:00", "15:45:00"];
     for (let i = 0; i < courses.length; i++) {
       for (let j = 0; j < timeArray.length; j++) {
-        if (courses[i].time == timeArray[j]) {
+        if (courses[i].time === timeArray[j]) {
           // 可以放进第j+1个data数据中
           // 还需要判断加入到week1还是week5
           this.setState(prev => {

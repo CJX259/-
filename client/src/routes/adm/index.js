@@ -12,9 +12,7 @@ import "./index.css"
 import AddUser from "../../components/addUser";
 import ControlUser from "../../components/controlUser";
 import StudentForm from "../../components/studentForm";
-import CourseTable from '../../components/courseTable';
 import ShowCourse from '../../components/showCourse';
-import AddCourse from "../../components/addCourse";
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
@@ -61,7 +59,7 @@ class Teacher extends Component {
     }
     render() {
         return (
-            <Layout style={{ height:'100vh', minHeight: '700px', minWidth: '1000px' }}>
+            <Layout style={{ minHeight: '700px', minWidth: '1100px' }}>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" ></div>
                     <Header className="site-layout-background title_name" style={{ padding: 0 }}>管理员</Header>
@@ -135,12 +133,10 @@ class Teacher extends Component {
                                     欢迎来到广州大学选课系统
                                 </div>
                             </Switch>
-
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
                 </Layout>
-
             </Layout>
         )
     }

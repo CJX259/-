@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import {
     Form,
     Input,
@@ -112,7 +112,7 @@ const AddCourse = (props) => {
     // 解析props
     props.course.building = building.filter(item => {
         var a = props.course.place.search(item);
-        return a != -1
+        return a !== -1
     })[0];
     props.course.class = props.course.place.replace(props.course.building, "");
     const [form] = Form.useForm();

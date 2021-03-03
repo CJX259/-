@@ -4,7 +4,7 @@ import { getTeacherById } from "../../services/teacherSer";
 import { Table, Tag, Spin, Button, message, Space } from 'antd';
 import "./index.css";
 import { deepClone } from "../../utils"
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 // 还需要的api:
 // 拿到已经选择该课程的人数  
 // 拿到该课程的老师名字     √
@@ -36,7 +36,7 @@ export default class Course extends Component {
                 const count = await showStudent(item.id);
                 item.nowCount = typeof count.data.data != "string" ? count.data.data.length : 0;
                 item.teacherName = typeof res.data.data != "string" ? res.data.data.name : "";
-                item.isChoose = this.state.chooseCourses.indexOf(item.id) == -1 ? false : true
+                item.isChoose = this.state.chooseCourses.indexOf(item.id) === -1 ? false : true
                 return item;
                 // 
             })
@@ -59,15 +59,15 @@ export default class Course extends Component {
         if (e.isChoose) {
             // 退课
             const result = await outCourse(e.id);
-            if (typeof result.data.data != "string" && result.data.msg == 'success') {
+            if (typeof result.data.data !== "string" && result.data.msg === 'success') {
                 //退课成功
                 this.setState(prev => {
                     let newChoose = prev.chooseCourses.filter(item => {
-                        return item != e.id
+                        return item !== e.id
                     });
                     let newCourses = deepClone(prev.courses);
                     newCourses = newCourses.map(item => {
-                        item.isChoose = newChoose.indexOf(item.id) == -1 ? false : true;
+                        item.isChoose = newChoose.indexOf(item.id) === -1 ? false : true;
                         if (item.id === e.id) {
                             item.nowCount--;
                             // const count = await showStudent(item.id);
@@ -85,7 +85,7 @@ export default class Course extends Component {
             }
         } else if (!e.isChoose) {
             // 选课
-            if (e.nowCount == e.capacity) {
+            if (e.nowCount === e.capacity) {
                 message.error("课容量已满，请联系任课老师", 2);
                 return null;
             }
@@ -111,7 +111,7 @@ export default class Course extends Component {
                     // 需要深克隆才行
                     let newCourses = deepClone(prev.courses);
                     newCourses = newCourses.map(item => {
-                        item.isChoose = newChoose.indexOf(item.id) == -1 ? false : true;
+                        item.isChoose = newChoose.indexOf(item.id) === -1 ? false : true;
                         if (item.id === e.id) {
                             item.nowCount++;
                         }
@@ -140,7 +140,7 @@ export default class Course extends Component {
                         render={(record) => {
                             return (
                                 <Space>{record.nowCount}/{record.capacity}
-                                    {record.nowCount == record.capacity ? <Tag color="red">已满</Tag> : ""}
+                                    {record.nowCount === record.capacity ? <Tag color="red">已满</Tag> : ""}
                                 </Space>
                             )
                         }}

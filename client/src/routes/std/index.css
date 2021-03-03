@@ -11,14 +11,12 @@
 }
 .title_name {
   color: #fff;
-  font-size: 16px;
+  font-size: 20px;
   font-weight: bold;
   margin-left: 50%;
-  text-align: center;
-  white-space: nowrap;
   transform: translateX(-50%);
 }
-.logout_btn{
+.logout_btn {
   float: right;
   margin-top: 32px;
   transform: translateY(-50%);

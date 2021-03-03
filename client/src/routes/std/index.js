@@ -46,7 +46,7 @@ class Student extends Component {
             openKeys: e
         })
     }
-    
+
     logout = (e) => {
         // 删掉cookie
         let flag = window.confirm("确定退出登录吗?");
@@ -57,7 +57,7 @@ class Student extends Component {
     }
     render() {
         return (
-            <Layout style={{ minHeight: '700px', minWidth: '1000px' }}>
+            <Layout style={{ minHeight: '700px', minWidth: '1100px' }}>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
                     <Header className="site-layout-background title_name" style={{ padding: 0 }}>学生端</Header>
@@ -114,7 +114,6 @@ class Student extends Component {
                                     欢迎来到广州大学选课系统
                                 </div>
                             </Switch>
-
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>
