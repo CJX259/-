@@ -34,15 +34,15 @@ class index extends Component {
     render() {
         if (this.state.user && this.state.user.job === "admin") {
             return (
-                <Admin userObj={this.state.user}></Admin>
+                <div class="wrapper"><Admin userObj={this.state.user}></Admin></div>
             )
         } else if (this.state.user && this.state.user.job === "teacher") {
             return (
-                <Teacher userObj={this.state.user}></Teacher>
+                <div class="wrapper"><Teacher userObj={this.state.user}></Teacher></div>
             )
         } else if (this.state.user && this.state.user.job === "student") {
             return (
-                <Student userObj={this.state.user}></Student>
+                <div class="wrapper"><Student userObj={this.state.user}></Student></div>
             )
         } else {
             return (

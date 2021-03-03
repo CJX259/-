@@ -41,7 +41,6 @@ router.get("/delStd", asyncHandler(async (req, res) => {
 }))
 //学生选课  需要学生id和课程id  sid与cid  仅学生端     如果选一个不存在的cid会怎样？报错
 router.get("/chooseCourse", asyncHandler(async (req, res) => {
-    // console.log(req.query.sid);
     if (!req.query.cid) {
         return "未传参数"
     }

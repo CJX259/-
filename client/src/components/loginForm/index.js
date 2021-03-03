@@ -12,12 +12,17 @@ class LoginForm extends Component {
         this.setState({
             isLoading: true
         });
-        const resp = await login(Nob, password);
-        if (typeof resp.data.data != "string") {
-            await message.success("登录成功", 1);
-            this.props.history.push("/index");
-        } else {
-            message.error(resp.data.data, 3);
+        try{
+            const resp = await login(Nob, password);
+            console.log(resp);
+            if (typeof resp.data.data != "string") {
+                await message.success("登录成功", 1);
+                this.props.history.push("/index");
+            } else {
+                message.error(resp.data.data, 3);
+            }
+        }catch(err){
+            message.error(err);
         }
         this.setState({
             isLoading: false

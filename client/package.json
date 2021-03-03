@@ -33,6 +33,7 @@
     "file-loader": "4.3.0",
     "fs-extra": "^8.1.0",
     "html-webpack-plugin": "4.0.0-beta.11",
+    "http-proxy-middleware": "^1.0.6",
     "identity-obj-proxy": "3.0.0",
     "jest": "24.9.0",
     "jest-environment-jsdom-fourteen": "1.0.1",
@@ -69,7 +70,7 @@
     "workbox-webpack-plugin": "4.3.1"
   },
   "scripts": {
-    "start": "set PORT=8080&&node scripts/start.js",
+    "start": "set PORT=80&&node scripts/start.js",
     "watch-css": "less-watch-compiler src src",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js"
