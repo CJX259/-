@@ -5,6 +5,7 @@ export async function outStd(cid,sid){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function delStudent(sid){
@@ -12,6 +13,7 @@ export async function delStudent(sid){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function getAllStudent(){
@@ -19,6 +21,7 @@ export async function getAllStudent(){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function updateStudent(sid, sObj){
@@ -29,6 +32,7 @@ export async function updateStudent(sid, sObj){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function addStd(sObj){

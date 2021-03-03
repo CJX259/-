@@ -2,6 +2,8 @@
   background: url("../../image/login.jpg");
   background-size: cover;
   height: 100vh;
+  min-height: 600px;
+  min-width: 1000px;
   width: 100%;
   position: relative;
 }

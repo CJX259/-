@@ -17,9 +17,10 @@ export default class Course extends Component {
             isLoading: true
         })
         const result = await getAllCourses();
+        // 学生已选课程
         const chooseCourse = await getChooseCourse();
-        let courses = result ? result.data.data : [];
-        let chooseCourses = chooseCourse ? chooseCourse.data.data.map(item => item.id) : [];
+        let courses = typeof result.data.data != "string" ? result.data.data : [];
+        let chooseCourses = typeof chooseCourse.data.data != "string" ? chooseCourse.data.data.map(item => item.id) : [];
         chooseCourses = [...this.state.chooseCourses, ...chooseCourses];
         //修改一下courses的参数
         //1. id => key  √
@@ -31,9 +32,10 @@ export default class Course extends Component {
             courses = courses.map(async (item) => {
                 item.key = item.id;
                 const res = await getTeacherById(item.TeacherId);
+
                 const count = await showStudent(item.id);
-                item.nowCount = count ? count.data.data.length : 0;
-                item.teacherName = res ? res.data.data.name : "";
+                item.nowCount = typeof count.data.data != "string" ? count.data.data.length : 0;
+                item.teacherName = typeof res.data.data != "string" ? res.data.data.name : "";
                 item.isChoose = this.state.chooseCourses.indexOf(item.id) == -1 ? false : true
                 return item;
                 // 
@@ -45,22 +47,19 @@ export default class Course extends Component {
                 isLoading: false
             })
         })
-        // console.log(this.state.chooseCourse);
-
-        // console.log(this.props.location.state);
     }
 
     state = {
         courses: [],
         isLoading: false,
-        chooseCourses: []
+        chooseCourses: [],
     }
     // 如果已经选了就退，如果没选就选
     controlChoose = async (e) => {
         if (e.isChoose) {
             // 退课
             const result = await outCourse(e.id);
-            if (result && result.data.msg == 'success') {
+            if (typeof result.data.data != "string" && result.data.msg == 'success') {
                 //退课成功
                 this.setState(prev => {
                     let newChoose = prev.chooseCourses.filter(item => {
@@ -90,8 +89,22 @@ export default class Course extends Component {
                 message.error("课容量已满，请联系任课老师", 2);
                 return null;
             }
+            // 判断学生有无week和time与这个课完全相同的，有则因为冲突无法选择
+            for (let i = 0; i < this.state.chooseCourses.length; i++) {
+                for (let j = 0; j < this.state.courses.length; j++) {
+                    if (this.state.chooseCourses[i] === this.state.courses[j].id) {
+                        // 找到已选的课，判断时间有无冲突
+                        let tempCourse = this.state.courses[j];
+                        if (e.time === tempCourse.time && e.weekDay === tempCourse.weekDay) {
+                            message.error(`与${tempCourse.name}课程冲突，选课失败`, 2);
+                            return null;
+                        }
+
+                    }
+                }
+            }
             const result = await chooseCourseFromStd(e.id);
-            if (result && result.data.msg == 'success') {
+            if (typeof result.data.data != "string") {
                 //选课成功    setState调用了两次  是因为没有深度克隆的原因
                 this.setState(prev => {
                     let newChoose = [...prev.chooseCourses, e.id];

@@ -103,7 +103,7 @@ const building = [
 const AddCourse = () => {
     const [form] = Form.useForm();
 
-    const onFinish =async values => {
+    const onFinish = async values => {
         values.capacity = +values.capacity;
         values.score = +values.score;
         if (typeof values.capacity != "number" || typeof values.score != "number") {
@@ -115,10 +115,10 @@ const AddCourse = () => {
         values.weekDay = values.timeAndWeek[0];
         let result = null;
         result = await addCourse(values);
-        if(result && result.data.msg === "success"){
-            message.success("添加成功",3);
-        }else{
-            message.error("添加失败",3);
+        if (result && typeof result.data.data != "string") {
+            message.success("添加成功", 3);
+        } else {
+            message.error("添加失败", 3);
         }
     };
 

@@ -7,6 +7,7 @@ export async function login(Nob, password){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function getDetailById(){
@@ -14,6 +15,7 @@ export async function getDetailById(){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }
 export async function resetPassword(newPassword){
@@ -23,5 +25,6 @@ export async function resetPassword(newPassword){
         return res;
     }).catch(function (err){
         console.log(err);
+        return err;
     })
 }

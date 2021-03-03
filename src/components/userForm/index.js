@@ -31,7 +31,7 @@ export default function UserForm(props) {
         } else {
             message.error("更新操作出错", 3);
         }
-        if (result) {
+        if (typeof result.data.data !="string") {
             message.success("更新成功", 1);
             // 重新发送请求
             if(props.user.controlJob === "teacher"){
