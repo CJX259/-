@@ -23,7 +23,6 @@ app.use(cookieParser());
 
 
 app.use(require('./tokenMiddleware'));
-app.use(require('./errorMiddleware'));
 
 app.use("/api/user", require("./api/user"));
 app.use("/api/admin", require('./api/admin'));
@@ -31,6 +30,7 @@ app.use("/api/teacher", require('./api/teacher'));
 app.use("/api/std", require('./api/student'));
 app.use("/api/course", require('./api/course'));
 
+app.use(require('./errorMiddleware'));
 
 app.listen(port, _ => {
     console.log("监听端口" + port);

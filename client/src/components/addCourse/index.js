@@ -114,11 +114,16 @@ const AddCourse = () => {
         values.time = values.timeAndWeek[1];
         values.weekDay = values.timeAndWeek[0];
         let result = null;
-        result = await addCourse(values);
-        if (result && typeof result.data.data != "string") {
-            message.success("添加成功", 3);
-        } else {
-            message.error("添加失败", 3);
+        try {
+            result = await addCourse(values);
+            console.log(result);
+            if (result && typeof result.data.data != "string") {
+                message.success("添加成功", 3);
+            } else {
+                message.error(result.data.data, 3);
+            }
+        } catch (err) {
+            message.error(err);
         }
     };
 

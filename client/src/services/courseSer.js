@@ -47,6 +47,7 @@ export async function showStudent(cid) {
 }
 // tea 
 export async function addCourse(courseObj, tid) {
+    console.log("addCourse");
     return await axios.post(`/api/course/addCourse${tid ? `?tid=${tid}` : ""}`,
         courseObj
     ).then(res => {

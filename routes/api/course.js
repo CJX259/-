@@ -16,8 +16,19 @@ router.post("/addCourse", asyncHandler(async (req, res) => {
         return result;
     } else if (req.job === "t") {
         req.body.TeacherId = req.userId;
-        const result = await Course.addCourse(req.body);
-        // console.log('插入完成');
+        // 判断老师当时有没有时间
+        let result = await Course.getCourseByTeacher(req.body.TeacherId);
+        if (result) {
+            const courses = result.rows;
+            for (let i = 0; i < courses.length; i++) {
+                let course = courses[i];
+                if (course.time === req.body.timeAndWeek[1] && course.weekDay == req.body.timeAndWeek[0]) {
+                    console.log('冲突');
+                    return `与${course.name}课程时间冲突，创建失败！`;
+                }
+            }
+        }
+        result = await Course.addCourse(req.body);
         return result;
     } else {
         return "暂无权限";
@@ -112,7 +123,6 @@ router.get("/outStudent", asyncHandler(async (req, res) => {
         // console.log("完成删除");
         return result;
     }
-
 }))
 router.get("/getAllCourses", asyncHandler(async (req, res) => {
     const result = await Course.getAllCourse();

@@ -21,7 +21,7 @@ module.exports.asyncHandler =  (handle)=>{
             res.send(module.exports.getResult(result));
             return null;
         }catch(e){
-            next(e);
+            throw new Error(e);
         }
     }
 }

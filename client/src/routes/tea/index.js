@@ -59,7 +59,7 @@ class Teacher extends Component {
     }
     render() {
         return (
-            <Layout style={{ minHeight: '100vh' }}>
+            <Layout style={{ minHeight: '700px', minWidth: '1000px' }}>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
                     <Header className="site-layout-background title_name" style={{ padding: 0 }}>教师端</Header>
