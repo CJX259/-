@@ -1,9 +1,8 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { getAllCourses, showStudent, delCourse } from "../../services/courseSer";
 import { getTeacherById } from "../../services/teacherSer";
 import { Table, Tag, Spin, Button, message, Space, Modal } from 'antd';
 // import "./index.css";
-import { deepClone } from "../../utils"
 import CourseForm from '../courseForm';
 const { Column, ColumnGroup } = Table;
 // 还需要的api:
@@ -16,14 +15,14 @@ export default function ShowCourse(props) {
     const requestCourse = async () => {
         setIsLoading(true);
         const result = await getAllCourses();
-        let courses = typeof result.data.data !="string" ? result.data.data : [];
+        let courses = typeof result.data.data != "string" ? result.data.data : [];
 
         courses = courses.map(async (item) => {
             item.key = item.id;
             const res = await getTeacherById(item.TeacherId);
             const count = await showStudent(item.id);
-            item.nowCount = typeof count.data.data !="string"  ? count.data.data.length : 0;
-            item.teacherName = typeof res.data.data !="string" ? res.data.data.name : "";
+            item.nowCount = typeof count.data.data != "string" ? count.data.data.length : 0;
+            item.teacherName = typeof res.data.data != "string" ? res.data.data.name : "";
             return item;
         })
         // });
@@ -45,7 +44,7 @@ export default function ShowCourse(props) {
     const [current, setCurrent] = useState({});
 
     const handleOk = (values) => {
-        
+
     }
     const handleCancel = () => {
         setMVisible(false);
@@ -61,7 +60,7 @@ export default function ShowCourse(props) {
         }
         let result = await delCourse(record.id);
         console.log(result);
-        if (typeof result.data.data !="string") {
+        if (typeof result.data.data != "string") {
             message.success('删除成功', 2);
         }
         else {
@@ -81,7 +80,7 @@ export default function ShowCourse(props) {
                     render={(record) => {
                         return (
                             <Space>{record.nowCount}/{record.capacity}
-                                {record.nowCount == record.capacity ? <Tag color="red">已满</Tag> : ""}
+                                {record.nowCount === record.capacity ? <Tag color="red">已满</Tag> : ""}
                             </Space>
                         )
                     }}

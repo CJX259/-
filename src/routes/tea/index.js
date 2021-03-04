@@ -59,7 +59,7 @@ class Teacher extends Component {
     }
     render() {
         return (
-            <Layout style={{ minHeight: '100vh' }}>
+            <Layout style={{ minHeight: '700px', minWidth: '1100px' }}>
                 <Sider collapsible collapsed={this.state.collapsed} onCollapse={this.onCollapse}>
                     <div className="logo" />
                     <Header className="site-layout-background title_name" style={{ padding: 0 }}>教师端</Header>
@@ -121,7 +121,6 @@ class Teacher extends Component {
                                     欢迎来到广州大学选课系统
                                 </div>
                             </Switch>
-
                         </div>
                     </Content>
                     <Footer style={{ textAlign: 'center' }}>Ant Design ©2018 Created by Ant UED</Footer>

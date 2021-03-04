@@ -1,4 +1,4 @@
-import { getTeacherCourse, getTeacherById } from "../../services/teacherSer";
+import { getTeacherCourse } from "../../services/teacherSer";
 import { showStudent, delCourse } from "../../services/courseSer";
 import { outStd } from "../../services/stdSer";
 import React, { useState, useEffect } from 'react'
@@ -61,7 +61,7 @@ function TeaCourse() {
     function handleOk() {
         setMLoading(true);
         // 没有选到人
-        if (outStdInACourse.outStd.length == 0) {
+        if (outStdInACourse.outStd.length === 0) {
             handleCancel();
             setMLoading(false);
             return;
@@ -125,7 +125,7 @@ function TeaCourse() {
                         return (
                             <Space>
                                 {record.chooseStd.length}/{record.capacity}
-                                {record.chooseStd.length == record.capacity ? <Tag color="red">已满</Tag> : ""}
+                                {record.chooseStd.length === record.capacity ? <Tag color="red">已满</Tag> : ""}
                             </Space>
                         )
                     }}

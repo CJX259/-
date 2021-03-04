@@ -14,7 +14,6 @@ class LoginForm extends Component {
         });
         try{
             const resp = await login(Nob, password);
-            console.log(resp);
             if (typeof resp.data.data != "string") {
                 await message.success("登录成功", 1);
                 this.props.history.push("/index");
